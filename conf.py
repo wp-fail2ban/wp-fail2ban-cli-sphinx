@@ -17,7 +17,10 @@ copyright = '2026, Charles Lecklider'
 author = 'Charles Lecklider'
 
 _pkg = json.load(open(os.path.join(os.path.dirname(__file__), 'version.json')))
-version = _pkg.get('version', '').split('-', 1)[0].split('+', 1)[0]
+# Docs titles are major.minor. A patch release does not publish a new manual.
+_core = _pkg.get('version', '').split('-', 1)[0].split('+', 1)[0]
+_parts = _core.split('.')
+version = '.'.join(_parts[:2]) if len(_parts) >= 2 else _core
 release = version
 if _pkg.get('version_label'):
     release = '%s (%s)' % (version, _pkg['version_label'])
